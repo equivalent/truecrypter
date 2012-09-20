@@ -1,0 +1,29 @@
+require './paths'
+
+task :mount do
+   Rake::Task["backup"].invoke # comment this if you don't want automatic backup
+  `sudo truecrypt -k #{KEYFILE} --mount #{MOUNT_FILE} #{MOUNT_FOLDER}`
+end
+
+task :umount do
+  `sudo truecrypt --dismount #{MOUNT_FOLDER} `
+   Rake::Task["ls"].invoke
+end
+
+task :backup do
+    file_name = "#{BACKUP_FOLDER}songs_#{Time.now.to_s.split(' ').first}_#{Time.now.to_i}.save"
+    # 7zip archive of file 
+    `7z a #{file_name} '#{MOUNT_FILE}'`
+    if File.exist? file_name
+      p 'PB sucess'
+    else
+      p "PB something went wrong"
+    end
+
+end
+
+task :ls do
+  puts "listing folder: "
+  puts `ls -a #{MOUNT_FOLDER}`
+end
+
