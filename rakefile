@@ -15,9 +15,9 @@ task :backup do
     # 7zip archive of file 
     `7z a #{file_name} '#{MOUNT_FILE}'`
     if File.exist? file_name
-      p 'PB sucess'
+      p 'backup sucess'
     else
-      p "PB something went wrong"
+      p "backup something went wrong"
     end
 
 end
