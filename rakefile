@@ -1,24 +1,26 @@
 require './paths'
 
+truecrypt="/Applications/TrueCrypt.app/Contents/MacOS/Truecrypt --text"
+truecrypt="truecrypt"
+
 task :mount do
-   Rake::Task["backup"].invoke # comment this if you don't want automatic backup
-  `sudo truecrypt -k #{KEYFILE} --mount #{MOUNT_FILE} #{MOUNT_FOLDER}`
+  Rake::Task["backup"].invoke # comment this if you don't want automatic backup
+  `sudo #{truecrypt} -k #{KEYFILE} --mount #{MOUNT_FILE} #{MOUNT_FOLDER}`
 end
 
 task :umount do
-  `sudo truecrypt --dismount #{MOUNT_FOLDER} `
-   Rake::Task["ls"].invoke
+  `sudo #{truecrypt} --dismount #{MOUNT_FOLDER} `
+  Rake::Task["ls"].invoke
 end
 
 task :backup do
-    file_name = "#{BACKUP_FOLDER}songs_#{Time.now.to_s.split(' ').first}_#{Time.now.to_i}.save"
-    # 7zip archive of file 
-    `7z a #{file_name} '#{MOUNT_FILE}'`
-    if File.exist? file_name
-      p 'backup sucess'
-    else
-      p "backup something went wrong"
-    end
+  file_name = "#{BACKUP_FOLDER}songs_#{Time.now.to_s.split(' ').first}_#{Time.now.to_i}.save"
+  `cp '#{MOUNT_FILE}' #{file_name}`
+  if File.exist? file_name
+    p 'backup sucess'
+  else
+    p "backup something went wrong"
+  end
 
 end
 
