@@ -1,5 +1,5 @@
 Easy rake task that will simplify up mount process of your
-[truecrypt](http://www.truecrypt.org/) encrypted files.
+[truecrypt](https://truecrypt.ch//) encrypted files.
 
 ## Set up
 
